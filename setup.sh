@@ -58,7 +58,7 @@ sed -i 's/^\(\s*\)\(--add-module=.*[^\]\)$/\1\2 \\\
 #sed -i '/--add-module=\$(MODULESDIR)\/ngx_http_substitutions_filter_module/i--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\' $NGINX_BUILD_DIR/debian/rules
 #sed -i '/--add-module=\$(MODULESDIR)\/nginx-cache-purge \\/i--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\' $NGINX_BUILD_DIR/debian/rules
 #sed -i '/--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\/i--add-module=\$(MODULESDIR)\/nginx-cache-purge \\' $NGINX_BUILD_DIR/debian/rules
-sed -ie "s/|NPS_VERSION|/$NPS_VERSION/g" $NGINX_BUILD_DIR/debian/rules
+#sed -ie "s/|NPS_VERSION|/$NPS_VERSION/g" $NGINX_BUILD_DIR/debian/rules
 
 cd $NGINX_BUILD_DIR
 dpkg-buildpackage -b
@@ -73,12 +73,12 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQLPASS}"
 
 #remove mysql
-sudo service mysql stop
-sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
-sudo apt-get autoremove -y
-sudo apt-get autoclean -y
-sudo rm -rf /var/lib/mysql/
-sudo rm -rf /etc/mysql/
+#sudo service mysql stop
+#sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
+#sudo apt-get autoremove -y
+#sudo apt-get autoclean -y
+#sudo rm -rf /var/lib/mysql/
+#sudo rm -rf /etc/mysql/
 
 #install mariadb
 sudo apt-get -y install mariadb-server
