@@ -93,6 +93,7 @@ sed -i "s/^;listen.group = www-data/listen.group = www-data/" /etc/php5/fpm/pool
 sed -i "s/^;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/www.conf
 sed -i "s/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:8000/" /etc/php5/fpm/pool.d/www.conf
 sudo service php5-fpm restart
+#need to add fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name; to fastcgi_params
 
 #install hhvm
 sudo apt-get install -y hhvm
