@@ -1,5 +1,5 @@
 #!/bin/bash
-#Recompile Nginx
+#Recompile Nginx w/ pagespeed & ngx_cache_purge
 #CONFIGURATION
 echo "Please enter NGX Pagespeed version number which you can get from "
 echo "https://github.com/pagespeed/ngx_pagespeed/releases "
