@@ -1,4 +1,25 @@
 #!/bin/bash
+#Recompile Nginx
+#CONFIGURATION
+echo "Please enter NGX Pagespeed version number which you can get from "
+echo "https://github.com/pagespeed/ngx_pagespeed/releases "
+echo "Example: 1.9.32.3 "
+echo "NGX Version: "
+read NPS_VERSION
+echo "Is the above information correct? Yes to install, no to exit."
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) break;;
+        No ) exit;;
+    esac
+done
+#update everything
+sudo add-apt-repository -s -y ppa:nginx/stable
+apt-get update
+
+#install tools
+sudo apt-get install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip git-core curl wget dpkg-dev -y
+
 #download nginx source
 sudo apt-get -y build-dep nginx
 sudo mkdir -p /opt/nginx
@@ -18,21 +39,14 @@ cd ngx_pagespeed-release-${NPS_VERSION}-beta/
 wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 tar -xzvf ${NPS_VERSION}.tar.gz  # extracts to psol/
 
-sed -i 's/^\(\s*\)\(--add-module=.*[^\]\)$/\1\2 \\\
-\1--add-module=\$(MODULESDIR\)\/ngx_pagespeed-release-'${NPS_VERSION}'-beta/g' $NGINX_BUILD_DIR/debian/rules
-#sed -i '/--add-module=\$(MODULESDIR)\/ngx_http_substitutions_filter_module/i--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\' $NGINX_BUILD_DIR/debian/rules
-#sed -i '/--add-module=\$(MODULESDIR)\/nginx-cache-purge \\/i--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\' $NGINX_BUILD_DIR/debian/rules
-#sed -i '/--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\/i--add-module=\$(MODULESDIR)\/nginx-cache-purge \\' $NGINX_BUILD_DIR/debian/rules
-#sed -ie "s/|NPS_VERSION|/$NPS_VERSION/g" $NGINX_BUILD_DIR/debian/rules
-
 #get nginx purge
 cd $NGINX_BUILD_DIR/debian/modules
 wget http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz
 tar -xzvf ngx_cache_purge-2.3.tar.gz
 
-#get openssl
-#wget http://www.openssl.org/source/openssl-1.0.2c.tar.gz
-#tar -xzvf openssl-1.0.2a.tar.gz
+sed -i 's/^\(\s*\)\(--add-module=.*[^\]\)$/\1\2 \\\
+\1--add-module=\$(MODULESDIR)\/ngx_cache_purge-2.3 \\\
+\1--add-module=\$(MODULESDIR\)\/ngx_pagespeed-release-'${NPS_VERSION}'-beta/g' $NGINX_BUILD_DIR/debian/rules
 
 #build nginx
 apt-get remove nginx
