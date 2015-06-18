@@ -49,7 +49,7 @@ sed -i 's/^\(\s*\)\(--add-module=.*[^\]\)$/\1\2 \\\
 \1--add-module=\$(MODULESDIR\)\/ngx_pagespeed-release-'${NPS_VERSION}'-beta/g' $NGINX_BUILD_DIR/debian/rules
 
 #build nginx
-apt-get remove nginx -y
+apt-get -y remove nginx
 cd $NGINX_BUILD_DIR
 dpkg-buildpackage -b
 cd /opt/nginx/
