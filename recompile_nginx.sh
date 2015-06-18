@@ -1,3 +1,4 @@
+#!/bin/bash
 #download nginx source
 sudo apt-get -y build-dep nginx
 sudo mkdir -p /opt/nginx
