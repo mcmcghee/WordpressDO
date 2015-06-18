@@ -44,6 +44,7 @@ cd $NGINX_BUILD_DIR/debian/modules
 wget http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz
 tar -xzvf ngx_cache_purge-2.3.tar.gz
 
+sed -i '/--add-module=\$(MODULESDIR)\/nginx-cache-purge \\/d' $NGINX_BUILD_DIR/debian/rules
 sed -i 's/^\(\s*\)\(--add-module=.*[^\]\)$/\1\2 \\\
 \1--add-module=\$(MODULESDIR)\/ngx_cache_purge-2.3 \\\
 \1--add-module=\$(MODULESDIR\)\/ngx_pagespeed-release-'${NPS_VERSION}'-beta/g' $NGINX_BUILD_DIR/debian/rules
