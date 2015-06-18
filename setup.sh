@@ -53,17 +53,18 @@ cd ngx_pagespeed-release-${NPS_VERSION}-beta/
 wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 tar -xzvf ${NPS_VERSION}.tar.gz  # extracts to psol/
 
+#get nginx purge
+cd $NGINX_BUILD_DIR/debian/modules
+wget http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz
+tar -xzvf ngx_cache_purge-2.3.tar.gz
+
 sed -i 's/^\(\s*\)\(--add-module=.*[^\]\)$/\1\2 \\\
+\1--add-module=\$(MODULESDIR)\/ngx_cache_purge-2.3 \\\
 \1--add-module=\$(MODULESDIR\)\/ngx_pagespeed-release-'${NPS_VERSION}'-beta/g' $NGINX_BUILD_DIR/debian/rules
 #sed -i '/--add-module=\$(MODULESDIR)\/ngx_http_substitutions_filter_module/i--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\' $NGINX_BUILD_DIR/debian/rules
 #sed -i '/--add-module=\$(MODULESDIR)\/nginx-cache-purge \\/i--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\' $NGINX_BUILD_DIR/debian/rules
 #sed -i '/--add-module=\$(MODULESDIR)\/ngx_pagespeed-release-|NPS_VERSION|-beta \\/i--add-module=\$(MODULESDIR)\/nginx-cache-purge \\' $NGINX_BUILD_DIR/debian/rules
 #sed -ie "s/|NPS_VERSION|/$NPS_VERSION/g" $NGINX_BUILD_DIR/debian/rules
-
-#get nginx purge
-cd $NGINX_BUILD_DIR/debian/modules
-wget http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz
-tar -xzvf ngx_cache_purge-2.3.tar.gz
 
 #get openssl
 #wget http://www.openssl.org/source/openssl-1.0.2c.tar.gz
