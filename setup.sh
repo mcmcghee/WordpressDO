@@ -119,8 +119,8 @@ sudo /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
 mkdir /var/run/nginx-cache
 
 sed -i "s/^\tworker_connections 768;/\tworker_connections 1536;/" /etc/nginx/nginx.conf
-sed -i "s/^\troot \/var\/www\/html;/\troot \/var\/www\/$SERVERNAMEORIP;/" /etc/nginx/nginx.conf
-sed -i "s/^\ttry_files $uri $uri\/ =404;/\ttry_files $uri $uri\/ \/index.php?$args;/" /etc/nginx/nginx.conf
+sed -i "s/^\troot \/var\/www\/html;/\troot \/var\/www\/$SERVERNAMEORIP;/" /etc/nginx/sites-available/default
+sed -i "s/^\ttry_files $uri $uri\/ =404;/\ttry_files $uri $uri\/ \/index.php?$args;/" /etc/nginx/sites-available/default
 sed -i "s/^\tssl_prefer_server_ciphers on;/\tssl_prefer_server_ciphers on;\n\n\tfastcgi_cache_path \/var\/run\/nginx-cache\/fcgi levels=1:2 keys_zone=microcache:100m max_size=1024m inactive=1h;/" /etc/nginx/nginx.conf
 
 cat << EOF > upstream
